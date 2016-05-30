@@ -1,0 +1,15 @@
+{
+  "name": "StepsJS",
+  "version": "0.0.0",
+  "description": "StepsJS",
+  "main": "app.js",
+  "author": {
+    "name": "Ricardo Peres",
+    "email": "rperes@hotmail.com"
+  },
+  "dependencies": {
+    "phantomjs-prebuilt": "^2.1.7",
+    "selenium-webdriver": "^2.53.2",
+    "webdriverjs": "^1.7.5"
+  }
+}
