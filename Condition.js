@@ -1,4 +1,4 @@
-exports.run = function(engine, args) {
+exports.run = function (engine, args) {
     var driver = engine.driver;
     var webdriver = engine.webdriver;
     var selector = args.selector;
@@ -6,21 +6,21 @@ exports.run = function(engine, args) {
     var trueBranch = args["true"];
     var falseBranch = args["false"];
     var condition = null;
-    
+
     if (selector) {
         condition = By.css(selector);
     }
-    
+
     if (condition) {
-        driver
+        return driver
             .findElements(condition)
-            .then(function(elms) {
+            .then(function (elms) {
                 console.log('Condition: found ' + elms.length);
-                
+
                 if (elms.length > 0) {
-                    engine.runStep(trueBranch, -1);
+                    engine.executeStep(trueBranch, -1);
                 } else if (falseBranch) {
-                    engine.runStep(falseBranch, -1);
+                    engine.executeStep(falseBranch, -1);
                 }
             });
     }

@@ -1,21 +1,30 @@
 'use strict';
 
-var Engine = function(driver, webdriver) {
-    this.driver = driver;
-    this.webdriver = webdriver;
-    this.steps = [];
-    this.onerror = null;
+var Engine = function (driver, webdriver) {
+    var self = this;
+
+    self.driver = driver;
+    self.webdriver = webdriver;
+    self.steps = [];
+    self.onerror = null;
+    self.executionSteps = {
+        currentIndex: null,
+        steps: []
+    };
 };
 
-Engine.prototype.runStep = function(step, index) {
+Engine.prototype.executeStep = function (step, index) {
+    console.log("executeStep: " + index);
+
+    var self = this;
     var command = step.command;
     var func = require('./' + command);
-    
+
     if (!func) {
         throw new Error('Command ' + command + ' not found');
     }
-    
-    var args = { index: index };
+
+    var args = {index: index};
     var id = step.id || '';
 
     for (var p in step) {
@@ -24,50 +33,34 @@ Engine.prototype.runStep = function(step, index) {
         }
     }
 
-    try {
-        func.run(this, args);
-    }
-    catch (ex) {
-        if (typeof this.onerror === 'function') {
-            this.onerror.call(this, ex, step, args);
-        } else {
-            throw ex;
-        }
-    }
+    // Most be a promise
+    return func.run(self, args);
 };
 
-Engine.prototype.buildSteps = function(index) {        
-    var num = index;
+Engine.prototype.runStep = function () {
     var self = this;
 
-    var promise = new Promise(function (resolve, reject) {
-        console.log('Engine: starting');
-        resolve();
-    }); 
+    console.log("runStep: " + self.currentStepIndex);
 
-    for (var i = index; i < this.steps.length; ++i) {        
-        promise
-            .then(function() {
-                self.runStep(self.steps[num], num);            
-                num++;
-            })
-            .catch(function(ex) {
-                if (typeof self.onerror === 'function') {
-                    self.onerror.call(self, ex, self.steps[num]);
-                } else {
-                    throw ex;
-                }
-            });
-    }
-
-    promise.then(function () {
-        console.log('Engine: finished');
+    self.executeStep(self.executionSteps.steps[self.currentStepIndex], self.currentStepIndex).then(function (res) {
+        console.log("executeStep " + self.currentStepIndex + " finished");
+        
+        ++self.currentStepIndex;
+        self.runStep();
     });
-}
+};
 
-Engine.prototype.run = function(steps) {
-    this.steps = steps;
-    this.buildSteps(0);    
+
+Engine.prototype.run = function (steps) {
+    var self = this;
+
+    self.steps = steps;
+
+    self.executionSteps.steps = steps;
+    self.currentStepIndex = 0;
+
+    // Run first step
+    self.runStep();
 };
 
 exports.Engine = Engine;

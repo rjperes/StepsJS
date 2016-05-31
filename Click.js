@@ -1,4 +1,4 @@
-exports.run = function(engine, args) {
+exports.run = function (engine, args) {
     var driver = engine.driver;
     var webdriver = engine.webdriver;
     var selector = args.selector;
@@ -8,18 +8,18 @@ exports.run = function(engine, args) {
 
     if (selector) {
         condition = By.css(selector);
-    } 
-    
+    }
+
     if (condition) {
-         driver
+        return driver
             .findElement(condition)
-            .then(function(elm) {
+            .then(function (elm) {
                 elm
                     .click()
-                    .then(function() {
+                    .then(function () {
                         console.log('Click: clicked');
                     });
-            })
-            
+            });
+
     }
 };

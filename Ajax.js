@@ -1,4 +1,4 @@
-exports.run = function(engine, args) {
+exports.run = function (engine, args) {
     var driver = engine.driver;
     var url = args.url;
     var useFetch = args.useFetch;
@@ -7,55 +7,55 @@ exports.run = function(engine, args) {
     var mode = args.mode || 'cors';
     var redirect = args.redirect || 'follow';
     var headers = {};
-    
+
     if (args.headers) {
         headers = JSON.parse(args.headers);
     }
-        
+
     if (url) {
         var script = '';
-        
+
         if (useFetch == true) {
             script = 'var headers = new Headers(); ';
-            
+
             for (var h in headers) {
                 script += 'headers.append("' + h + '", "' + headers[h] + '"); ';
             }
-            
+
             script += 'fetch("' + url + '", { method: "' + method + '", headers: headers, mode: "' + mode + '", redirect: "' + redirect + '"';
-            
+
             if ((payload) && ((method.toUpperCase() === 'POST') || (method.toUpperCase() === 'PUT'))) {
                 script += ', body: "' + payload + '"';
             }
-            
-            script += ' }).then(function(result) { console.log(result); })'; 
+
+            script += ' }).then(function(result) { console.log(result); })';
         } else {
             script = 'var xhr = new XMLHttpRequest(); xhr.onreadystatechange = function(res) { console.log(res.statusText); }; ';
-            
+
             for (var h in headers) {
                 script += 'xhr.setRequestHeader("' + h + '", "' + headers[h] + '"); ';
             }
-         
+
             script += 'xhr.open("' + method + '", "' + url + '"); ';
-            
+
             if ((payload) && ((method.toUpperCase() === 'POST') || (method.toUpperCase() === 'PUT'))) {
                 script += 'xhr.send("' + payload + '")';
             } else {
                 script += 'xhr.send();';
             }
         }
-        
-        driver
+
+        return driver
             .executeScript(script)
-            .then(function() {
-               console.log('Ajax: complete');
+            .then(function () {
+                console.log('Ajax: complete');
             })
-            .then(function() {
+            .then(function () {
                 var logs = driver
                     .manage()
                     .logs()
                     .get('browser')
-                    .then(function(logs) {
+                    .then(function (logs) {
                         logs.toString();
                     });
             });

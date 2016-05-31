@@ -1,10 +1,10 @@
-exports.run = function(engine, args) {
+exports.run = function (engine, args) {
     var driver = engine.driver;
     var url = args.url;
 
-    driver
+    return driver
         .get(url)
-        .then(function() {
-           console.log('Navigate: success'); 
+        .then(function () {
+            console.log('Navigate: success');
         });
 };

@@ -1,4 +1,4 @@
-exports.run = function(engine, args) {
+exports.run = function (engine, args) {
     var driver = engine.driver;
     var webdriver = engine.webdriver;
     var title = args.title;
@@ -7,23 +7,23 @@ exports.run = function(engine, args) {
     var timeout = args.timeout || 20 * 1000;
     var until = webdriver.until;
     var By = webdriver.By;
-    
+
     var condition = null;
-    
+
     if (title) {
         if (contains) {
-            condition = until.titleContains(title, timeout);            
+            condition = until.titleContains(title, timeout);
         } else {
             condition = until.titleIs(title, timeout);
         }
     } else if (selector) {
         condition = until.elementLocated(By.css(selector), timeout);
     }
-    
+
     if (condition) {
-        driver
+        return driver
             .wait(condition)
-            .then(function() {
+            .then(function () {
                 console.log('Wait: found');
             });
     }
