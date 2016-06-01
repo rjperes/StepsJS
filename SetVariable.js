@@ -33,12 +33,24 @@ SetVariable.prototype.run = function(engine, args) {
                             .then(function(value) {
                                 driver.variables[variable] = value;
                             });
-                    } else if (source === 'innerHTML') {
+                    } else if (source === 'innerHTML' || source === 'html') {
                         elm
                             .getInnerHtml()
                             .then(function(html) {
                                 driver.variables[variable] = html;
                             });
+                    } else if (source === 'tag') {
+                        elm
+                            .getTagName()
+                            .then(function(tag) {
+                                driver.variables[variable] = tag;
+                            });                        
+                    } else if (source === 'class') {
+                        elm
+                            .getAttribute('class')
+                            .then(function(value) {
+                                driver.variables[variable] = value;
+                            });                        
                     } else if (source.indexOf('attr(') === 0) {
                         var attr = source.split('(')[1].split(')')[0];
                         elm
@@ -53,7 +65,9 @@ SetVariable.prototype.run = function(engine, args) {
                             .then(function(value) {
                                 driver.variables[variable] = value;
                             });
-                    }                    
+                    } else {
+                        return self.cancel('Unknown source');
+                    }
                 }
             });
     } else if (value) {
