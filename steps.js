@@ -1,5 +1,6 @@
 exports.steps = [
     { command: "Navigate", url: "https://www.google.com" },
+    { command: "SetVariable", variable: "bodyClass", selector: "body", source: "attr(class)" },
     { command: "TakeScreenshot", filename: "/file.jpg" },
     { command: "InsertScript", script: "alert('aqui')" },
     { command: "Goto", stepId: "End" },
