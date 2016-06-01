@@ -19,10 +19,9 @@ Step.prototype.proceed = function() {
     });  
 };
 
-Step.prototype.cancel = function() {
-    return new Promise(function(resolve, reject) {
-        reject();
-    });      
+Step.prototype.cancel = function(message) {
+    message = message || '';
+    return Promise.reject(new Error(message)); 
 }
 
 module.exports = Step;
