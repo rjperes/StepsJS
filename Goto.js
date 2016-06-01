@@ -23,10 +23,8 @@ Goto.prototype.run = function(engine, args) {
 
     if (parseInt(stepIndex) == stepIndex) {
         console.log('Goto: change to ' + stepIndex);
-        return new Promise(function (resolve, reject) {
-            engine.currentStepIndex = (stepIndex - 1 );
-            resolve(true);
-        });
+        engine.currentStepIndex = (stepIndex - 1 );
+        return this.proceed();
     } else {
         return this.cancel();
     }
