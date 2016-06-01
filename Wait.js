@@ -35,7 +35,7 @@ Wait.prototype.run = function(engine, args) {
                 console.log('Wait: found');
             });
     } else {
-        return this.cancel();
+        return this.cancel('Unmet condition');
     }
 }
 

@@ -38,7 +38,7 @@ SetValue.prototype.run = function(engine, args) {
             .wait(condition)
             .then(setValue)
     } else {
-        return this.cancel();
+        return this.cancel('Unmet condition');
     }
 }
 

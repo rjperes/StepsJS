@@ -18,7 +18,7 @@ InsertScript.prototype.run = function(engine, args) {
     } else if (script) {
         html += 'script.innerHTML = "' + script + '";';
     } else {
-        return this.cancel();
+        return this.cancel('No script supplied');
     }
 
     html += ' head.appendChild(script);';

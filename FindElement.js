@@ -25,7 +25,7 @@ FindElement.prototype.run = function(engine, args) {
                 console.log('FindElement: found ' + elms.length);
             });
     } else {
-        return this.cancel();
+        return this.cancel('Unmet condition');
     }
 }
 

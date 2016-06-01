@@ -17,7 +17,7 @@ Navigate.prototype.run = function(engine, args) {
                 console.log('Navigate: success');
             });
     } else {
-        return this.cancel();
+        return this.cancel('No URL supplied');
     }
 }
 

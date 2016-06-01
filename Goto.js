@@ -21,12 +21,12 @@ Goto.prototype.run = function(engine, args) {
         }
     }
 
-    if (parseInt(stepIndex) == stepIndex) {
+    if ((parseInt(stepIndex) == stepIndex) && (stepIndex < engine.executionSteps.steps.length)) {
         console.log('Goto: change to ' + stepIndex);
         engine.currentStepIndex = (stepIndex - 1 );
         return this.proceed();
     } else {
-        return this.cancel();
+        return this.cancel('Step not found');
     }
 }
 

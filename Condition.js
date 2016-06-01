@@ -32,7 +32,7 @@ Condition.prototype.run = function(engine, args) {
                 }
             });
     } else {
-        return this.cancel();
+        return this.cancel('Unmet condition');
     }
 }
 
