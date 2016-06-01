@@ -1,4 +1,12 @@
-exports.run = function (engine, args) {
+var Step = require('./Step');
+
+function Condition() {    
+}
+
+Condition.prototype = new Step();
+Condition.prototype.constructor = Condition;
+Condition.prototype.super = Step.prototype;
+Condition.prototype.run = function(engine, args) {
     var driver = engine.driver;
     var webdriver = engine.webdriver;
     var selector = args.selector;
@@ -23,5 +31,9 @@ exports.run = function (engine, args) {
                     engine.executeStep(falseBranch, -1);
                 }
             });
+    } else {
+        return this.cancel();
     }
-};
+}
+
+module.exports = Condition;

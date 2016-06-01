@@ -1,4 +1,12 @@
-exports.run = function (engine, args) {
+var Step = require('./Step');
+
+function Goto() {    
+}
+
+Goto.prototype = new Step();
+Goto.prototype.constructor = Goto;
+Goto.prototype.super = Step.prototype;
+Goto.prototype.run = function(engine, args) {
     var stepId = args.stepId;
     var stepIndex = args.stepIndex;
 
@@ -19,5 +27,9 @@ exports.run = function (engine, args) {
             engine.currentStepIndex = (stepIndex - 1 );
             resolve(true);
         });
+    } else {
+        return this.cancel();
     }
-};
+}
+
+module.exports = Goto;

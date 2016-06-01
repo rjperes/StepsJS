@@ -13,8 +13,7 @@ var Engine = require('./Engine').Engine;
 var steps = require('./steps');
 
 var engine = new Engine(driver, webdriver);
-/*engine.onerror = function(ex, step, data) {
-    console.log('An error occurred: ' + ex);
-};*/
+engine.onerror = function(ex, step, data) {
+    console.log('Error: ' + ex);
+};
 engine.run(steps.steps);
-

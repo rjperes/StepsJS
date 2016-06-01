@@ -1,4 +1,12 @@
-exports.run = function (engine, args) {
+var Step = require('./Step');
+
+function SetValue() {    
+}
+
+SetValue.prototype = new Step();
+SetValue.prototype.constructor = SetValue;
+SetValue.prototype.super = Step.prototype;
+SetValue.prototype.run = function(engine, args) {
     var driver = engine.driver;
     var webdriver = engine.webdriver;
     var selector = args.selector;
@@ -29,5 +37,9 @@ exports.run = function (engine, args) {
         return driver
             .wait(condition)
             .then(setValue)
+    } else {
+        return this.cancel();
     }
-};
+}
+
+module.exports = SetValue;

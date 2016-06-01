@@ -24,8 +24,7 @@ Engine.prototype.executeStep = function (step, index) {
         throw new Error('Command ' + command + ' not found');
     }
 
-    var args = {index: index};
-    var id = step.id || '';
+    var args = { index: index };
 
     for (var p in step) {
         if (p !== 'command') {
@@ -33,8 +32,9 @@ Engine.prototype.executeStep = function (step, index) {
         }
     }
 
-    // Most be a promise
-    return func.run(self, args);
+    var s = new func();
+    
+    return s.execute(self, args);
 };
 
 Engine.prototype.runStep = function () {
@@ -45,17 +45,18 @@ Engine.prototype.runStep = function () {
     self.executeStep(self.executionSteps.steps[self.currentStepIndex], self.currentStepIndex).then(function (res) {
         console.log("executeStep " + self.currentStepIndex + " finished");
         
-        ++self.currentStepIndex;
-        self.runStep();
+        self.currentStepIndex++;
+        
+        if (self.currentStepIndex < self.executionSteps.steps.length) {
+            self.runStep();
+        }
     });
 };
-
 
 Engine.prototype.run = function (steps) {
     var self = this;
 
     self.steps = steps;
-
     self.executionSteps.steps = steps;
     self.currentStepIndex = 0;
 

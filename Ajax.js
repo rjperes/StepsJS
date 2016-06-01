@@ -1,4 +1,12 @@
-exports.run = function (engine, args) {
+var Step = require('./Step');
+
+function Ajax() {    
+}
+
+Ajax.prototype = new Step();
+Ajax.prototype.constructor = Ajax;
+Ajax.prototype.super = Step.prototype;
+Ajax.prototype.run = function(engine, args) {
     var driver = engine.driver;
     var url = args.url;
     var useFetch = args.useFetch;
@@ -59,5 +67,9 @@ exports.run = function (engine, args) {
                         logs.toString();
                     });
             });
+    } else {
+        return this.cancel();
     }
-};
+}
+
+module.exports = Ajax;

@@ -1,10 +1,24 @@
-exports.run = function (engine, args) {
+var Step = require('./Step');
+
+function Navigate() {    
+}
+
+Navigate.prototype = new Step();
+Navigate.prototype.constructor = Navigate;
+Navigate.prototype.super = Step.prototype;
+Navigate.prototype.run = function(engine, args) {
     var driver = engine.driver;
     var url = args.url;
 
-    return driver
-        .get(url)
-        .then(function () {
-            console.log('Navigate: success');
-        });
-};
+    if (url) {
+        return driver
+            .get(url)
+            .then(function () {
+                console.log('Navigate: success');
+            });
+    } else {
+        return this.cancel();
+    }
+}
+
+module.exports = Navigate;

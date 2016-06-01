@@ -1,4 +1,12 @@
-exports.run = function (engine, args) {
+var Step = require('./Step');
+
+function Click() {    
+}
+
+Click.prototype = new Step();
+Click.prototype.constructor = Click;
+Click.prototype.super = Step.prototype;
+Click.prototype.run = function(engine, args) {
     var driver = engine.driver;
     var webdriver = engine.webdriver;
     var selector = args.selector;
@@ -20,6 +28,9 @@ exports.run = function (engine, args) {
                         console.log('Click: clicked');
                     });
             });
-
+    } else {
+        return this.cancel();
     }
-};
+}
+
+module.exports = Click;

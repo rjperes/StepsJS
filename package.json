@@ -8,6 +8,7 @@
     "email": "rperes@hotmail.com"
   },
   "dependencies": {
+    "fs": "0.0.2",
     "phantomjs-prebuilt": "^2.1.7",
     "selenium-webdriver": "^2.53.2",
     "webdriverjs": "^1.7.5"

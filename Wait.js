@@ -1,4 +1,12 @@
-exports.run = function (engine, args) {
+var Step = require('./Step');
+
+function Wait() {    
+}
+
+Wait.prototype = new Step();
+Wait.prototype.constructor = Wait;
+Wait.prototype.super = Step.prototype;
+Wait.prototype.run = function(engine, args) {
     var driver = engine.driver;
     var webdriver = engine.webdriver;
     var title = args.title;
@@ -26,5 +34,9 @@ exports.run = function (engine, args) {
             .then(function () {
                 console.log('Wait: found');
             });
+    } else {
+        return this.cancel();
     }
-};
+}
+
+module.exports = Wait;

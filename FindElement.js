@@ -1,4 +1,12 @@
-exports.run = function (engine, args) {
+var Step = require('./Step');
+
+function FindElement() {    
+}
+
+FindElement.prototype = new Step();
+FindElement.prototype.constructor = FindElement;
+FindElement.prototype.super = Step.prototype;
+FindElement.prototype.run = function(engine, args) {
     var driver = engine.driver;
     var webdriver = engine.webdriver;
     var selector = args.selector;
@@ -16,5 +24,9 @@ exports.run = function (engine, args) {
             .then(function (elms) {
                 console.log('FindElement: found ' + elms.length);
             });
+    } else {
+        return this.cancel();
     }
-};
+}
+
+module.exports = FindElement;
