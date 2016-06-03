@@ -31,6 +31,6 @@ Click.prototype.run = function(engine, args) {
     } else {
         return this.cancel('Element not found');
     }
-}
+};
 
 module.exports = Click;

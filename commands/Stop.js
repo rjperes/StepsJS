@@ -20,6 +20,6 @@ Stop.prototype.run = function(engine, args) {
             console.log('Stop: stopped');
             process.exit();
         });
-}
+};
 
 module.exports = Stop;

@@ -15,6 +15,6 @@ ExecuteScript.prototype.run = function(engine, args) {
     return driver
         .executeScript
         .call(driver, args);
-}
+};
 
 module.exports = ExecuteScript;

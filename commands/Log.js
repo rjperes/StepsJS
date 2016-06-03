@@ -18,6 +18,6 @@ Log.prototype.run = function(engine, args) {
     }
     
     return this.proceed();
-}
+};
 
 module.exports = Log;

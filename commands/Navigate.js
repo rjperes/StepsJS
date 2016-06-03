@@ -19,6 +19,6 @@ Navigate.prototype.run = function(engine, args) {
     } else {
         return this.cancel('No URL supplied');
     }
-}
+};
 
 module.exports = Navigate;

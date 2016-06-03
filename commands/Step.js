@@ -24,6 +24,6 @@ Step.prototype.proceed = function(result) {
 Step.prototype.cancel = function(message) {
     message = message || '';
     return Promise.reject(new Error(message));
-}
+};
 
 module.exports = Step;

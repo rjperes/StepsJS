@@ -37,6 +37,6 @@ Wait.prototype.run = function(engine, args) {
     } else {
         return this.cancel('Unmet condition');
     }
-}
+};
 
 module.exports = Wait;
