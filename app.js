@@ -6,10 +6,9 @@ const Browser = {PhantomJS: "phantomjs", Firefox: "firefox"};
 
 let driver = new webdriver.Builder()
     .forBrowser(Browser.Firefox)
-    // .withCapabilities(webdriver.Capabilities.phantomjs())
     .build();
 
-let Engine = require('./Engine').Engine;
+let Engine = require('./src/Engine').Engine;
 
 const steps = require('./steps');
 
