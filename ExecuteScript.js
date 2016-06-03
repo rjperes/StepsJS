@@ -8,9 +8,8 @@ ExecuteScript.prototype.constructor = ExecuteScript;
 ExecuteScript.prototype.super = Step.prototype;
 ExecuteScript.prototype.run = function(engine, args) {
     var driver = engine.driver;
-    var webdriver = engine.webdriver;
     var script = args.script;
-    var args = args.args.unshift(script);
+    var args = args.unshift(script);
 
     return driver
         .executeScript
