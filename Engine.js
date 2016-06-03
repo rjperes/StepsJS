@@ -18,7 +18,7 @@ Engine.prototype.executeStep = function (step, index) {
 
     var self = this;
     var command = step.command;
-    var func = require('./' + command);
+    var func = require('./commands/' + command);
 
     if (!func) {
         throw new Error('Command ' + command + ' not found');
