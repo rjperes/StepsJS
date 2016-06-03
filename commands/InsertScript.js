@@ -29,6 +29,6 @@ InsertScript.prototype.run = function(engine, args) {
             driver.switchTo().alert().accept();
             console.log('InsertScript: success');
         });
-}
+};
 
 module.exports = InsertScript;

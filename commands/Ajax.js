@@ -70,6 +70,6 @@ Ajax.prototype.run = function(engine, args) {
     } else {
         return this.cancel('No URL specified');
     }
-}
+};
 
 module.exports = Ajax;

@@ -76,6 +76,6 @@ SetVariable.prototype.run = function(engine, args) {
     }
     
     return this.cancel('Missing source value');
-}
+};
 
 module.exports = SetVariable;

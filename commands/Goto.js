@@ -28,6 +28,6 @@ Goto.prototype.run = function(engine, args) {
     } else {
         return this.cancel('Step not found');
     }
-}
+};
 
 module.exports = Goto;

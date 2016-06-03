@@ -2,18 +2,19 @@
 
 var webdriver = require('selenium-webdriver');
 
-var Browser = { PhantomJS: "phantomjs", Firefox: "firefox" };
+const Browser = {PhantomJS: "phantomjs", Firefox: "firefox"};
 
-var driver = new webdriver.Builder()
+let driver = new webdriver.Builder()
     .forBrowser(Browser.Firefox)
+    // .withCapabilities(webdriver.Capabilities.phantomjs())
     .build();
 
-var Engine = require('./Engine').Engine;
+let Engine = require('./Engine').Engine;
 
-var steps = require('./steps');
+const steps = require('./steps');
 
-var engine = new Engine(driver, webdriver);
-engine.onerror = function(ex, step, data) {
+let engine = new Engine(driver, webdriver);
+engine.onerror = function (ex, step, data) {
     console.log('Error: ' + ex);
 };
 engine.run(steps.steps);
