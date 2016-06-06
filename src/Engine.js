@@ -4,6 +4,7 @@ import Click from './commands/click';
 import Condition from './commands/condition';
 import ExecuteScript from './commands/execute-script';
 import FindElement from './commands/find-element';
+import GetContent from './commands/get-content';
 import Goto from './commands/go-to';
 import InsertScript from './commands/insert-script';
 import Log from './commands/log';
@@ -21,6 +22,7 @@ const COMMANDS = {
     Condition: Condition,
     ExecuteScript: ExecuteScript,
     FindElement: FindElement,
+    GetContent: GetContent,
     Goto: Goto,
     InsertScript: InsertScript,
     Log: Log,
@@ -48,6 +50,14 @@ export default class Engine {
             currentIndex: null,
             steps: []
         };
+
+        this._context = {
+            savedData: []
+        };
+    }
+
+    saveData(dataKey, dataValue) {
+        this._context.savedData[dataKey] = dataValue.toString();
     }
 
     executeStep(step, index) {
@@ -104,6 +114,12 @@ export default class Engine {
                 let executionTime = (Date.now() - startTime) / 1000;
                 console.log(`\nEngine finished.`)
                 console.log(`Execution time: ${executionTime}s.`);
+
+                this.postExecution();
             });
+    }
+
+    postExecution() {
+        
     }
 }
