@@ -1,23 +1,17 @@
-var Step = require('./Step');
+import Step from './step';
 
-function Log() {    
-}
+export default class Log extends Step {
+    run(engine, args) {
+        let message = args.message;
+        let variable = args.variable;
+        let driver = engine.driver;
 
-Log.prototype = new Step();
-Log.prototype.constructor = Log;
-Log.prototype.super = Step.prototype;
-Log.prototype.run = function(engine, args) {
-    var message = args.message;
-    var variable = args.variable;
-    var driver = engine.driver;
-    
-    if (message) {
-        console.log('Log: ' + message);
-    } else if (variable && driver.variables && driver.variables[variable]) {
-        console.log('Log: ' + driver.variables[variable]);
+        if (message) {
+            console.log('Log: ' + message);
+        } else if (variable && driver.variables && driver.variables[variable]) {
+            console.log('Log: ' + driver.variables[variable]);
+        }
+
+        return this.proceed();
     }
-    
-    return this.proceed();
-};
-
-module.exports = Log;
+}

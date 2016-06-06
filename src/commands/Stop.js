@@ -1,25 +1,19 @@
-var Step = require('./Step');
+import Step from './step';
 
-function Stop() {    
-}
+export default class Stop extends Step {
+    run(engine, args) {
+        let message = args.message;
+        let driver = engine.driver;
 
-Stop.prototype = new Step();
-Stop.prototype.constructor = Stop;
-Stop.prototype.super = Step.prototype;
-Stop.prototype.run = function(engine, args) {
-    var message = args.message;
-    var driver = engine.driver;
+        if (message) {
+            console.log('Stop: ' + message);
+        }
 
-    if (message) {
-        console.log('Stop: ' + message);
+        return driver
+            .quit()
+            .then(function () {
+                console.log('Stop: stopped');
+                process.exit();
+            });
     }
-    
-    return driver
-        .quit()
-        .then(function () {
-            console.log('Stop: stopped');
-            process.exit();
-        });
-};
-
-module.exports = Stop;
+}

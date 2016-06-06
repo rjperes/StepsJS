@@ -1,7 +1,7 @@
 import Step from './step';
 
-export default class Click extends Step {
-    run(engine, args){
+export default class FindElement extends Step {
+    run(engine, args) {
         let driver = engine.driver;
         let webdriver = engine.webdriver;
         let selector = args.selector;
@@ -15,16 +15,12 @@ export default class Click extends Step {
 
         if (condition) {
             return driver
-                .findElement(condition)
-                .then(function (elm) {
-                    elm
-                        .click()
-                        .then(function () {
-                            console.log('Click: clicked');
-                        });
+                .findElements(condition)
+                .then(function (elms) {
+                    console.log('FindElement: found ' + elms.length);
                 });
         } else {
-            return this.cancel('Element not found');
+            return this.cancel('Unmet condition');
         }
     }
 }
