@@ -27,10 +27,10 @@ export default class Wait extends Step {
             return driver
                 .wait(condition)
                 .then(function () {
-                    console.log('Wait: found');
+                    console.log(`Wait: found`);
                 });
         } else {
-            return this.cancel('Unmet condition');
+            return this.cancel(`Unmet condition`);
         }
     }
 }

@@ -21,7 +21,7 @@ export default class TakeScreenshot extends Step {
                 currentDateAndTime += getTwoDigitsDatePart(currentDate.getSeconds());
 
                 let decodedImage = new Buffer(base64Image, 'base64');
-                let filenameToSave = SCREENSHOTS_DIR + currentDateAndTime + '_' + filename + '.jpg';
+                let filenameToSave = `${SCREENSHOTS_DIR}${currentDateAndTime}_${filename}.jpg`;
 
                 fs.writeFile(filenameToSave, decodedImage, function (err) {
                     if (err) {
@@ -33,8 +33,5 @@ export default class TakeScreenshot extends Step {
 }
 
 function getTwoDigitsDatePart(datePart) {
-    if (datePart < 10) {
-        return '0' + datePart;
-    }
-    return datePart;
+    return (datePart < 10) ? `0${datePart}` : datePart;
 }

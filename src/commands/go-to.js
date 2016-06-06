@@ -17,11 +17,11 @@ export default class Goto extends Step {
         }
 
         if ((parseInt(stepIndex) == stepIndex) && (stepIndex < engine.executionSteps.steps.length)) {
-            console.log('Goto: change to ' + stepIndex);
+            console.log(`Goto: change to ${stepIndex}.`);
             engine.currentStepIndex = (stepIndex - 1 );
             return this.proceed();
         } else {
-            return this.cancel('Step not found');
+            return this.cancel(`Step not found`);
         }
     }
 }

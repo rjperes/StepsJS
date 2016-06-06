@@ -18,7 +18,7 @@ export default class Condition extends Step {
             return driver
                 .findElements(condition)
                 .then(function (elms) {
-                    console.log('Condition: found ' + elms.length);
+                    console.log(`Condition: found ${elms.length}.`);
 
                     if (elms.length > 0) {
                         engine.executeStep(trueBranch, -1);
@@ -27,7 +27,7 @@ export default class Condition extends Step {
                     }
                 });
         } else {
-            return this.cancel('Unmet condition');
+            return this.cancel(`Unmet condition`);
         }
     }
 }

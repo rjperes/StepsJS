@@ -22,7 +22,7 @@ export default class InsertScript extends Step {
             .executeScript(html)
             .then(function () {
                 driver.switchTo().alert().accept();
-                console.log('InsertScript: success');
+                console.log(`InsertScript: success`);
             });
     }
 }

@@ -15,7 +15,7 @@ App.prototype.start = function() {
 
     let engine = new Engine(driver, webdriver);
     engine.onerror = function (ex, step, data) {
-        console.log('Error: ' + ex);
+        console.log(`Error: ${ex}.`);
     };
     engine.run(steps.steps);
 };

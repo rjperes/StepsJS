@@ -20,11 +20,11 @@ export default class Click extends Step {
                     elm
                         .click()
                         .then(function () {
-                            console.log('Click: clicked');
+                            console.log(`Click: clicked`);
                         });
                 });
         } else {
-            return this.cancel('Element not found');
+            return this.cancel(`Element not found`);
         }
     }
 }

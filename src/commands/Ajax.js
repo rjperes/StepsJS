@@ -51,7 +51,7 @@ export default class Ajax extends Step {
             return driver
                 .executeScript(script)
                 .then(function () {
-                    console.log('Ajax: complete');
+                    console.log(`Ajax: complete`);
                 })
                 .then(function () {
                     let logs = driver
@@ -63,7 +63,7 @@ export default class Ajax extends Step {
                         });
                 });
         } else {
-            return this.cancel('No URL specified');
+            return this.cancel(`No URL specified`);
         }
     }
 }

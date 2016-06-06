@@ -12,7 +12,7 @@ export default class Step {
     }
 
     run() {
-        throw new Error('Abstract method called');
+        throw new Error(`Abstract method called`);
     }
 
     proceed(result) {

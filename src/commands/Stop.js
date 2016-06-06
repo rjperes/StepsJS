@@ -6,13 +6,13 @@ export default class Stop extends Step {
         let driver = engine.driver;
 
         if (message) {
-            console.log('Stop: ' + message);
+            console.log(`Stop: ${message}.`);
         }
 
         return driver
             .quit()
             .then(function () {
-                console.log('Stop: stopped');
+                console.log(`Stop: stopped`);
                 process.exit();
             });
     }

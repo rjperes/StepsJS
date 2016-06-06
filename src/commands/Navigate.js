@@ -9,10 +9,10 @@ export default class Navigate extends Step {
             return driver
                 .get(url)
                 .then(function () {
-                    console.log('Navigate: success');
+                    console.log(`Navigate: success`);
                 });
         } else {
-            return this.cancel('No URL supplied');
+            return this.cancel(`No URL supplied`);
         }
     }
 }

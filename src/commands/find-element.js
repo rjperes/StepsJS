@@ -17,10 +17,10 @@ export default class FindElement extends Step {
             return driver
                 .findElements(condition)
                 .then(function (elms) {
-                    console.log('FindElement: found ' + elms.length);
+                    console.log(`FindElement: found ${elms.length}.`);
                 });
         } else {
-            return this.cancel('Unmet condition');
+            return this.cancel(`Unmet condition`);
         }
     }
 }

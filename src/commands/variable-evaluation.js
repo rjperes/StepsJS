@@ -83,18 +83,18 @@ export default class VariableEvaluation extends Step {
                     break;
 
                 default:
-                    return this.cancel('Unknown operator');
+                    return this.cancel(`Unknown operator`);
             }
 
             if (result === true) {
-                console.log('VariableEvaluation: executing true branch');
+                console.log(`VariableEvaluation: executing true branch`);
                 return engine.executeStep(trueBranch, -1);
             } else if (result === false) {
-                console.log('VariableEvaluation: executing false branch');
+                console.log(`VariableEvaluation: executing false branch`);
                 return engine.executeStep(falseBranch, -1);
             }
         } else {
-            return this.cancel('Variable not found');
+            return this.cancel(`Variable not found`);
         }
     }
 }

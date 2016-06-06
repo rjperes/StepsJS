@@ -7,9 +7,9 @@ export default class Log extends Step {
         let driver = engine.driver;
 
         if (message) {
-            console.log('Log: ' + message);
+            console.log(`Log: ${message}.`);
         } else if (variable && driver.variables && driver.variables[variable]) {
-            console.log('Log: ' + driver.variables[variable]);
+            console.log(`Log: ${driver.variables[variable]}`);
         }
 
         return this.proceed();

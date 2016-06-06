@@ -62,7 +62,7 @@ export default class SetVariable extends Step {
                                     driver.variables[variable] = value;
                                 });
                         } else {
-                            return self.cancel('Unknown source');
+                            return self.cancel(`Unknown source`);
                         }
                     }
                 });
@@ -71,6 +71,6 @@ export default class SetVariable extends Step {
             return this.proceed();
         }
 
-        return this.cancel('Missing source value');
+        return this.cancel(`Missing source value`);
     }
 }

@@ -1,3 +1,4 @@
+// Import commands
 import Ajax from './commands/ajax';
 import Click from './commands/click';
 import Condition from './commands/condition';
@@ -16,6 +17,11 @@ import Wait from './commands/wait';
 
 export default class Engine {
     constructor(driver, webdriver) {
+        if (!driver
+            || !webdriver) {
+            throw new Error(`Driver and Webdriver are needed to create an Engine.`);
+        }
+
         this.driver = driver;
         this.webdriver = webdriver;
         this.steps = [];
@@ -45,7 +51,7 @@ export default class Engine {
     }
 
     executeStep(step, index) {
-        console.log("executeStep: " + index);
+        console.log(`Execute step: ${index}`);
 
         let command = step.command;
 
@@ -54,10 +60,6 @@ export default class Engine {
         }
 
         let func = this.commands[command];
-
-        if (!func) {
-            throw new Error('Command ' + command + ' not found');
-        }
 
         let args = {index: index};
 
@@ -73,11 +75,11 @@ export default class Engine {
     }
 
     runStep() {
-        console.log("runStep: " + this.currentStepIndex);
+        console.log(`Run step: ${this.currentStepIndex}`);
 
         return this.executeStep(this.executionSteps.steps[this.currentStepIndex], this.currentStepIndex)
             .then((res) => {
-                console.log("executeStep " + this.currentStepIndex + " finished");
+                console.log(`Execute step ${this.currentStepIndex} finished`);
 
                 this.currentStepIndex++;
 
@@ -100,7 +102,7 @@ export default class Engine {
             .then(() => {
                 let executionTime = (Date.now() - startTime) / 1000;
                 console.log(`Engine finished.`)
-                console.log(`Execution time: ${executionTime} s.`);
+                console.log(`Execution time: ${executionTime}s.`);
             });
     }
 }

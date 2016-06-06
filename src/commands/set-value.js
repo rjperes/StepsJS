@@ -17,7 +17,7 @@ export default class SetValue extends Step {
                 driver
                     .executeScript('return arguments[0].' + property + '="' + value + '"', elm)
                     .then(function (res) {
-                        console.log('SetValue: value "' + res + '" set');
+                        console.log(`SetValue: value "${res}" set.`);
                     });
             }
         };
@@ -33,7 +33,7 @@ export default class SetValue extends Step {
                 .wait(condition)
                 .then(setValue)
         } else {
-            return this.cancel('Unmet condition');
+            return this.cancel(`Unmet condition`);
         }
     }
 }
