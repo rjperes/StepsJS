@@ -50,15 +50,15 @@ export default class Ajax extends Step {
 
             return driver
                 .executeScript(script)
-                .then(function () {
+                .then(() => {
                     console.log(`Ajax: complete`);
                 })
-                .then(function () {
+                .then(() => {
                     let logs = driver
                         .manage()
                         .logs()
                         .get('browser')
-                        .then(function (logs) {
+                        .then((logs) => {
                             logs.toString();
                         });
                 });

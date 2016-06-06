@@ -11,7 +11,7 @@ export default class Stop extends Step {
 
         return driver
             .quit()
-            .then(function () {
+            .then(() => {
                 console.log(`Stop: stopped`);
                 process.exit();
             });

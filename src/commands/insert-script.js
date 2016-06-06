@@ -20,7 +20,7 @@ export default class InsertScript extends Step {
 
         return driver
             .executeScript(html)
-            .then(function () {
+            .then(() => {
                 driver.switchTo().alert().accept();
                 console.log(`InsertScript: success`);
             });

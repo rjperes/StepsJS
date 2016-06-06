@@ -17,7 +17,7 @@ export default class Step {
 
     proceed(result) {
         result = result || true;
-        return new Promise(function (resolve, reject) {
+        return new Promise((resolve, reject) => {
             resolve(result);
         });
     }

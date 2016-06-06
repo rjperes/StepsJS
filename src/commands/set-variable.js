@@ -19,46 +19,46 @@ export default class SetVariable extends Step {
         if (selector) {
             return driver
                 .findElements(By.css(selector))
-                .then(function (elms) {
+                .then((elms) => {
                     if (elms.length > 0) {
                         let elm = elms[0];
 
                         if (source === 'value' || source === 'text') {
                             elm
                                 .getText()
-                                .then(function (value) {
+                                .then((value) => {
                                     driver.variables[variable] = value;
                                 });
                         } else if (source === 'innerHTML' || source === 'html') {
                             elm
                                 .getInnerHtml()
-                                .then(function (html) {
+                                .then((html) => {
                                     driver.variables[variable] = html;
                                 });
                         } else if (source === 'tag') {
                             elm
                                 .getTagName()
-                                .then(function (tag) {
+                                .then((tag)=> {
                                     driver.variables[variable] = tag;
                                 });
                         } else if (source === 'class') {
                             elm
                                 .getAttribute('class')
-                                .then(function (value) {
+                                .then((value) => {
                                     driver.variables[variable] = value;
                                 });
                         } else if (source.indexOf('attr(') === 0) {
                             let attr = source.split('(')[1].split(')')[0];
                             elm
                                 .getAttribute(attr)
-                                .then(function (value) {
+                                .then((value) => {
                                     driver.variables[variable] = value;
                                 });
                         } else if (source.indexOf('css(') === 0) {
                             let css = source.split('(')[1].split(')')[0];
                             elm
                                 .getCssValue(css)
-                                .then(function (value) {
+                                .then((value) => {
                                     driver.variables[variable] = value;
                                 });
                         } else {

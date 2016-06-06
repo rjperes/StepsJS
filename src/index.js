@@ -1,7 +1,7 @@
 import webdriver from 'selenium-webdriver';
 import Engine from './Engine';
 
-import steps from './steps';
+import steps from '../vodafone/steps';
 
 function App(){
 }
@@ -10,7 +10,7 @@ App.prototype.start = function() {
     const Browser = {PhantomJS: "phantomjs", Firefox: "firefox"};
 
     let driver = new webdriver.Builder()
-        .forBrowser(Browser.Firefox)
+        .forBrowser(Browser.PhantomJS)
         .build();
 
     let engine = new Engine(driver, webdriver);

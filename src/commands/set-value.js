@@ -16,7 +16,7 @@ export default class SetValue extends Step {
             if (value) {
                 driver
                     .executeScript('return arguments[0].' + property + '="' + value + '"', elm)
-                    .then(function (res) {
+                    .then((res) => {
                         console.log(`SetValue: value "${res}" set.`);
                     });
             }

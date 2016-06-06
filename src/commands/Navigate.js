@@ -8,7 +8,7 @@ export default class Navigate extends Step {
         if (url) {
             return driver
                 .get(url)
-                .then(function () {
+                .then(() => {
                     console.log(`Navigate: success`);
                 });
         } else {

@@ -17,7 +17,7 @@ export default class Condition extends Step {
         if (condition) {
             return driver
                 .findElements(condition)
-                .then(function (elms) {
+                .then((elms) => {
                     console.log(`Condition: found ${elms.length}.`);
 
                     if (elms.length > 0) {

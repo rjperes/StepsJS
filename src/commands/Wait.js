@@ -26,7 +26,7 @@ export default class Wait extends Step {
         if (condition) {
             return driver
                 .wait(condition)
-                .then(function () {
+                .then(() => {
                     console.log(`Wait: found`);
                 });
         } else {

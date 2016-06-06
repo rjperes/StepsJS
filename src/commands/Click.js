@@ -1,7 +1,7 @@
 import Step from './step';
 
 export default class Click extends Step {
-    run(engine, args){
+    run(engine, args) {
         let driver = engine.driver;
         let webdriver = engine.webdriver;
         let selector = args.selector;
@@ -16,10 +16,10 @@ export default class Click extends Step {
         if (condition) {
             return driver
                 .findElement(condition)
-                .then(function (elm) {
+                .then((elm) => {
                     elm
                         .click()
-                        .then(function () {
+                        .then(() => {
                             console.log(`Click: clicked`);
                         });
                 });

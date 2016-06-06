@@ -10,7 +10,7 @@ export default class TakeScreenshot extends Step {
 
         return driver
             .takeScreenshot()
-            .then(function (base64Image) {
+            .then((base64Image) => {
                 let currentDate = new Date();
                 let currentDateAndTime = '';
                 currentDateAndTime += currentDate.getFullYear();
@@ -22,8 +22,8 @@ export default class TakeScreenshot extends Step {
 
                 let decodedImage = new Buffer(base64Image, 'base64');
                 let filenameToSave = `${SCREENSHOTS_DIR}${currentDateAndTime}_${filename}.jpg`;
-                
-                fs.writeFile(filenameToSave, decodedImage, function (err) {
+
+                fs.writeFile(filenameToSave, decodedImage, (err) => {
                     if (err) {
                         throw err;
                     }
