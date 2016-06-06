@@ -1,3 +1,5 @@
+import Context from './context';
+
 // Import commands
 import Ajax from './commands/ajax';
 import Click from './commands/click';
@@ -51,13 +53,7 @@ export default class Engine {
             steps: []
         };
 
-        this._context = {
-            savedData: []
-        };
-    }
-
-    saveData(dataKey, dataValue) {
-        this._context.savedData[dataKey] = dataValue.toString();
+        this.context = new Context();
     }
 
     executeStep(step, index) {

@@ -22,7 +22,7 @@ export default class GetContent extends Step {
                             console.log(`GetText: got ${text}.`);
 
                             if (args.saveAs) {
-                                engine.saveData(args.saveAs, text);
+                                engine.context.saveData(args.saveAs, text);
                             }
 
                             return text;
