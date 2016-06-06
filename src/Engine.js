@@ -15,6 +15,24 @@ import TakeScreenshot from './commands/take-screenshot';
 import VariableEvaluation from './commands/variable-evaluation';
 import Wait from './commands/wait';
 
+const COMMANDS = {
+    Ajax: Ajax,
+    Click: Click,
+    Condition: Condition,
+    ExecuteScript: ExecuteScript,
+    FindElement: FindElement,
+    Goto: Goto,
+    InsertScript: InsertScript,
+    Log: Log,
+    Navigate: Navigate,
+    SetValue: SetValue,
+    SetVariable: SetVariable,
+    Stop: Stop,
+    TakeScreenshot: TakeScreenshot,
+    VariableEvaluation: VariableEvaluation,
+    Wait: Wait
+};
+
 export default class Engine {
     constructor(driver, webdriver) {
         if (!driver
@@ -30,36 +48,16 @@ export default class Engine {
             currentIndex: null,
             steps: []
         };
-
-        this.commands = {
-            Ajax: Ajax,
-            Click: Click,
-            Condition: Condition,
-            ExecuteScript: ExecuteScript,
-            FindElement: FindElement,
-            Goto: Goto,
-            InsertScript: InsertScript,
-            Log: Log,
-            Navigate: Navigate,
-            SetValue: SetValue,
-            SetVariable: SetVariable,
-            Stop: Stop,
-            TakeScreenshot: TakeScreenshot,
-            VariableEvaluation: VariableEvaluation,
-            Wait: Wait
-        };
     }
 
     executeStep(step, index) {
-        console.log(`Execute step: ${index}`);
-
         let command = step.command;
 
-        if (!this.commands[command]) {
+        let stepCommand = COMMANDS[command];
+
+        if (!stepCommand) {
             throw new Error(`Command "${command.toString()}" not found.`);
         }
-
-        let func = this.commands[command];
 
         let args = {index: index};
 
@@ -69,17 +67,20 @@ export default class Engine {
             }
         }
 
-        let s = new func();
+        let cmd = new stepCommand();
 
-        return s.execute(this, args);
+        return cmd.execute(this, args);
     }
 
     runStep() {
-        console.log(`Run step: ${this.currentStepIndex}`);
+        console.log(`\nStep ${this.currentStepIndex} started.`);
+
+        let stepStartTime = Date.now();
 
         return this.executeStep(this.executionSteps.steps[this.currentStepIndex], this.currentStepIndex)
             .then((res) => {
-                console.log(`Execute step ${this.currentStepIndex} finished`);
+                let stepExecutionTime = (Date.now() - stepStartTime) / 1000;
+                console.log(`Step ${this.currentStepIndex} finished. Execution time: ${stepExecutionTime}s.`);
 
                 this.currentStepIndex++;
 
@@ -95,13 +96,13 @@ export default class Engine {
         this.currentStepIndex = 0;
 
         let startTime = Date.now();
-        console.log(`Engine started`);
+        console.log(`Engine started\n`);
 
         // Run first step
         this.runStep()
             .then(() => {
                 let executionTime = (Date.now() - startTime) / 1000;
-                console.log(`Engine finished.`)
+                console.log(`\nEngine finished.`)
                 console.log(`Execution time: ${executionTime}s.`);
             });
     }

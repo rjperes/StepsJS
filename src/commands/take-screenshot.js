@@ -1,10 +1,10 @@
 import Step from './step';
+import fs from 'fs';
 
 const SCREENSHOTS_DIR = './screenshots/';
 
 export default class TakeScreenshot extends Step {
     run(engine, args) {
-        let fs = require('fs');
         let filename = args.filename;
         let driver = engine.driver;
 
@@ -22,7 +22,7 @@ export default class TakeScreenshot extends Step {
 
                 let decodedImage = new Buffer(base64Image, 'base64');
                 let filenameToSave = `${SCREENSHOTS_DIR}${currentDateAndTime}_${filename}.jpg`;
-
+                
                 fs.writeFile(filenameToSave, decodedImage, function (err) {
                     if (err) {
                         throw err;
