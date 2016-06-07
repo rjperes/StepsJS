@@ -1,12 +1,19 @@
 {
   "name": "StepsJS",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "StepsJS",
   "main": "app.js",
-  "author": {
-    "name": "Ricardo Peres",
-    "email": "rperes@hotmail.com"
-  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ricardo Peres",
+      "email": "rperes@hotmail.com"
+    },
+    {
+      "name": "Ricardo Ferrolho",
+      "email": "ricardoferrolho@gmail.com"
+    }
+  ],
   "scripts": {
     "build": "babel src -d build"
   },
