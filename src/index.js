@@ -1,7 +1,7 @@
 import webdriver from 'selenium-webdriver';
 import Engine from './Engine';
 
-import steps from '../vodafone/steps';
+import steps from './steps';
 
 function App(){
 }
