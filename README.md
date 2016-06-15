@@ -1,14 +1,10 @@
 ﻿# StepsJS
+This project was forked from  *https://github.com/rjperes/StepsJS* on 07/06/2016,
+which is under the MIT license.
 
-A JavaScript framework for Selenium WebDriver automation
 
-    { command: "Navigate", url: "https://www.google.com" },
-    { command: "SetValue", selector: "[name=q]", property: "value", value: "webdriver" },
-    { command: "Click", selector: "[name=btnG]" },
-    { command: "Wait", contains: true, title: "webdriver" },
-    { command: "TakeScreenshot", filename: "/webdriver - results.jpg" },
-    { command: "Stop", id: "End", message: "Finished" }
-
+## Description
+A JavaScript framework for Selenium WebDriver automation.
 
 ## Development
 
@@ -26,3 +22,21 @@ npm run build
 ```
 node app.js
 ```
+
+## Example usage
+```
+var WebdriverEngine = require('./build/index');
+
+var stepsFile = require('./config/example.json');
+
+let appConfig = {
+    browser: "PhantomJS",
+    steps: stepsFile.steps
+};
+
+var app = new WebdriverEngine(appConfig);
+app.start();
+```
+
+## Example steps configuration file
+Look under "config/example.json"

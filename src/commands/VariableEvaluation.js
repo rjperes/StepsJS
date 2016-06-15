@@ -2,31 +2,37 @@ import Step from './step';
 
 const OPERATOR = {
     Contains: 'contains',
-    NotContains: 'not-contains',
-    StartsWith: 'starts-with',
-    EndsWith: 'ends-with',
+    NotContains: 'notContains',
+    StartsWith: 'startsWith',
+    EndsWith: 'endsWith',
     Equal: 'equal',
     Different: 'different',
     Truthy: 'truthy',
     Falsy: 'falsy',
     Greater: 'greater',
-    GreaterOrEqual: 'greater-or-equal',
+    GreaterOrEqual: 'greaterOrEqual',
     Less: 'less',
-    LessOrEqual: 'less-or-equal',
+    LessOrEqual: 'lessOrEqual',
     Regex: 'regex'
 };
 
 export default class VariableEvaluation extends Step {
     run(engine, args) {
-        let driver = engine.driver;
         let variable = args.variable;
         let operator = args.operator || Operator.Equal;
         let operand = args.operand || '';
         let trueBranch = args['true'];
         let falseBranch = args['false'];
 
-        if (variable && driver.variables && driver.variables[variable]) {
-            let value = driver.variables[variable];
+        let value = "";
+        try{
+            if (variable){
+                value = engine.context.getSavedData(variable);
+            }
+        }
+        catch(ex){}
+
+        if (value) {
             let result = null;
 
             switch (operator) {
@@ -83,18 +89,16 @@ export default class VariableEvaluation extends Step {
                     break;
 
                 default:
-                    return this.cancel(`Unknown operator`);
+                    break;
             }
 
             if (result === true) {
                 console.log(`VariableEvaluation: executing true branch`);
                 return engine.executeStep(trueBranch, -1);
-            } else if (result === false) {
-                console.log(`VariableEvaluation: executing false branch`);
-                return engine.executeStep(falseBranch, -1);
             }
-        } else {
-            return this.cancel(`Variable not found`);
         }
+
+        console.log(`VariableEvaluation: executing false branch`);
+        return engine.executeStep(falseBranch, -1);
     }
 }

@@ -3,19 +3,19 @@
  */
 
 export default class Context {
-    constructor(){
+    constructor() {
         this._savedData = [];
     }
 
     saveData(dataKey, dataValue) {
-        this._savedData[dataKey] = dataValue.toString();
+        this._savedData[dataKey] = dataValue;
     }
 
     getSavedData(dataKey) {
-        if (this._savedData[dataKey] === undefined) {
-            throw new Error(`${dataKey} does not exist in saved data.`);
-        }
-
         return this._savedData[dataKey];
+    }
+
+    getContextData() {
+        return this._savedData;
     }
 }

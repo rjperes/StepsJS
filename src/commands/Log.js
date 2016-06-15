@@ -4,12 +4,11 @@ export default class Log extends Step {
     run(engine, args) {
         let message = args.message;
         let variable = args.variable;
-        let driver = engine.driver;
 
         if (message) {
             console.log(`Log: ${message}.`);
-        } else if (variable && driver.variables && driver.variables[variable]) {
-            console.log(`Log: ${driver.variables[variable]}`);
+        } else if (variable && engine.context.getSavedData(variable)) {
+            console.log(`Log: ${engine.context.getSavedData(variable)}`);
         }
 
         return this.proceed();

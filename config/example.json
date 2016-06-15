@@ -1,0 +1,66 @@
+{
+  "steps": [
+    {
+      "command": "Navigate",
+      "url": "https://www.google.com"
+    },
+    {
+      "command": "ExecuteScriptAsync",
+      "script": "document.addEventListener(\"click\", function() { callback.call() })"
+    },
+    {
+      "command": "SetVariable",
+      "variable": "bodyClass",
+      "selector": "body",
+      "source": "attr(class)"
+    },
+    {
+      "command": "InsertScript",
+      "script": "alert('aqui')"
+    },
+    {
+      "command": "GoTo",
+      "stepId": "End"
+    },
+    {
+      "command": "Condition",
+      "selector": ".xpto",
+      "false": {
+        "command": "Log",
+        "message": "not found"
+      }
+    },
+    {
+      "command": "Condition",
+      "selector": "[name=q]",
+      "true": {
+        "command": "Log",
+        "message": "found"
+      }
+    },
+    {
+      "command": "SetValue",
+      "selector": "[name=q]",
+      "property": "value",
+      "value": "webdriver"
+    },
+    {
+      "command": "Click",
+      "selector": "[name=btnG]"
+    },
+    {
+      "command": "Wait",
+      "contains": true,
+      "title": "webdriver"
+    },
+    {
+      "command": "FindElement",
+      "selector": "div.g"
+    },
+    {
+      "command": "Stop",
+      "id": "End",
+      "message": "Premature end"
+    }
+  ]
+}

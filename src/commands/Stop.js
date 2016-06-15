@@ -1,5 +1,7 @@
 import Step from './step';
 
+const STOP_MESSAGE_KEY = "stopMessage";
+
 export default class Stop extends Step {
     run(engine, args) {
         let message = args.message;
@@ -13,7 +15,13 @@ export default class Stop extends Step {
             .quit()
             .then(() => {
                 console.log(`Stop: stopped`);
-                process.exit();
+                let stopMessage = message || `Stop called.`;
+                
+                // Set the execution index as the last step so the engine stops without breaking
+                engine.executionSteps.currentIndex = (engine.executionSteps.steps.length - 1);
+                engine.context.saveData(STOP_MESSAGE_KEY, stopMessage);
+
+                return this.proceed();
             });
     }
 }

@@ -4,18 +4,20 @@ import Context from './context';
 import Ajax from './commands/ajax';
 import Click from './commands/click';
 import Condition from './commands/condition';
-import ExecuteScript from './commands/execute-script';
-import FindElement from './commands/find-element';
-import GetContent from './commands/get-content';
-import Goto from './commands/go-to';
-import InsertScript from './commands/insert-script';
+import ExecuteScript from './commands/executescript';
+import FindElement from './commands/findelement';
+import GetContent from './commands/getcontent';
+import GoTo from './commands/goto';
+import InsertScript from './commands/insertscript';
+import ExecuteScriptAsync from './commands/executescriptasync';
 import Log from './commands/log';
 import Navigate from './commands/navigate';
-import SetValue from './commands/set-value';
-import SetVariable from './commands/set-variable';
+import SelectValue from './commands/selectvalue';
+import SetValue from './commands/setvalue';
+import SetVariable from './commands/setvariable';
 import Stop from './commands/stop';
-import TakeScreenshot from './commands/take-screenshot';
-import VariableEvaluation from './commands/variable-evaluation';
+import TakeScreenshot from './commands/takescreenshot';
+import VariableEvaluation from './commands/variableevaluation';
 import Wait from './commands/wait';
 
 const COMMANDS = {
@@ -23,12 +25,14 @@ const COMMANDS = {
     Click: Click,
     Condition: Condition,
     ExecuteScript: ExecuteScript,
+    ExecuteScriptAsync: ExecuteScriptAsync,
     FindElement: FindElement,
     GetContent: GetContent,
-    Goto: Goto,
+    GoTo: GoTo,
     InsertScript: InsertScript,
     Log: Log,
     Navigate: Navigate,
+    SelectValue: SelectValue,
     SetValue: SetValue,
     SetVariable: SetVariable,
     Stop: Stop,
@@ -36,6 +40,10 @@ const COMMANDS = {
     VariableEvaluation: VariableEvaluation,
     Wait: Wait
 };
+
+const EXECUTION_SUCCESS_KEY = "success";
+const EXECUTION_RESULT_ERROR_KEY = "error";
+const STOP_MESSAGE_KEY = "stopMessage";
 
 export default class Engine {
     constructor(driver, webdriver) {
@@ -46,7 +54,6 @@ export default class Engine {
 
         this.driver = driver;
         this.webdriver = webdriver;
-        this.steps = [];
         this.onerror = null;
         this.executionSteps = {
             currentIndex: null,
@@ -79,43 +86,65 @@ export default class Engine {
     }
 
     runStep() {
-        console.log(`\nStep ${this.currentStepIndex} started.`);
+        let stepId = this.executionSteps.steps[this.executionSteps.currentIndex].id || this.executionSteps.currentIndex
+        console.log(`\nStep ${stepId} started.`);
 
         let stepStartTime = Date.now();
 
-        return this.executeStep(this.executionSteps.steps[this.currentStepIndex], this.currentStepIndex)
+        return this.executeStep(this.executionSteps.steps[this.executionSteps.currentIndex], this.executionSteps.currentIndex)
             .then((res) => {
                 let stepExecutionTime = (Date.now() - stepStartTime) / 1000;
-                console.log(`Step ${this.currentStepIndex} finished. Execution time: ${stepExecutionTime}s.`);
+                console.log(`Step ${this.executionSteps.currentIndex } finished. Execution time: ${stepExecutionTime}s.`);
 
-                this.currentStepIndex++;
+                this.executionSteps.currentIndex++;
 
-                if (this.currentStepIndex < this.executionSteps.steps.length) {
-                    this.runStep();
+                if (this.executionSteps.currentIndex < this.executionSteps.steps.length) {
+                    return this.runStep();
                 }
-            });
+            })
     }
 
     run(steps) {
-        this.steps = steps;
         this.executionSteps.steps = steps;
-        this.currentStepIndex = 0;
+        this.executionSteps.currentIndex = 0;
 
         let startTime = Date.now();
         console.log(`Engine started\n`);
 
         // Run first step
-        this.runStep()
-            .then(() => {
+        return this.runStep()
+            .then((res) => {
                 let executionTime = (Date.now() - startTime) / 1000;
-                console.log(`\nEngine finished.`)
+                console.log(`\nEngine finished with success.`);
                 console.log(`Execution time: ${executionTime}s.`);
 
-                this.postExecution();
+                let stopMessage = this.context.getSavedData(STOP_MESSAGE_KEY);
+                if (stopMessage) {
+                    this.context.saveData(EXECUTION_SUCCESS_KEY, false);
+                    this.context.saveData(EXECUTION_RESULT_ERROR_KEY, stopMessage);
+                    console.log(`\nStop message: ${stopMessage}\n`);
+                } else {
+                    this.context.saveData(EXECUTION_SUCCESS_KEY, true);
+                }
+
+                return this.postExecution();
+            })
+            .catch(err => {
+                console.log(`\nEngine finished with error: ${err.toString()}`);
+                this.context.saveData(EXECUTION_SUCCESS_KEY, false);
+
+                let errorResponse = {
+                    error: err.toString(),
+                    step: this.executionSteps.steps[this.executionSteps.currentIndex]
+                };
+
+                this.context.saveData(EXECUTION_RESULT_ERROR_KEY, errorResponse);
+
+                return this.postExecution();
             });
     }
 
     postExecution() {
-        
+        return this.context.getContextData();
     }
 }

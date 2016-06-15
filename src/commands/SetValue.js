@@ -7,14 +7,14 @@ export default class SetValue extends Step {
         let selector = args.selector;
         let property = args.property;
         let variable = args.variable;
-        let value = args.value || driver.variables[variable];
+        let value = args.value || engine.context.getSavedData(variable);
         let until = webdriver.until;
         let By = webdriver.By;
-        let timeout = args.timeout || 5 * 1000;
+        let timeout = args.timeout || 10 * 1000;
 
         let setValue = function (elm) {
             if (value) {
-                driver
+                return driver
                     .executeScript('return arguments[0].' + property + '="' + value + '"', elm)
                     .then((res) => {
                         console.log(`SetValue: value "${res}" set.`);

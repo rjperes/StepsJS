@@ -1,6 +1,5 @@
 ﻿import Step from './step';
 
-
 export default class SetVariable extends Step {
     run(engine, args) {
         let driver = engine.driver;
@@ -11,10 +10,6 @@ export default class SetVariable extends Step {
         let source = args.source || 'value';
         let By = webdriver.By;
         let self = this;
-
-        if (!driver.variables) {
-            driver.variables = {};
-        }
 
         if (selector) {
             return driver
@@ -27,39 +22,39 @@ export default class SetVariable extends Step {
                             elm
                                 .getText()
                                 .then((value) => {
-                                    driver.variables[variable] = value;
+                                    engine.context.saveData(variable, value);
                                 });
                         } else if (source === 'innerHTML' || source === 'html') {
                             elm
                                 .getInnerHtml()
                                 .then((html) => {
-                                    driver.variables[variable] = html;
+                                    engine.context.saveData(variable, html);
                                 });
                         } else if (source === 'tag') {
                             elm
                                 .getTagName()
                                 .then((tag)=> {
-                                    driver.variables[variable] = tag;
+                                    engine.context.saveData(variable, tag);
                                 });
                         } else if (source === 'class') {
                             elm
                                 .getAttribute('class')
                                 .then((value) => {
-                                    driver.variables[variable] = value;
+                                    engine.context.saveData(variable, value);
                                 });
                         } else if (source.indexOf('attr(') === 0) {
                             let attr = source.split('(')[1].split(')')[0];
                             elm
                                 .getAttribute(attr)
                                 .then((value) => {
-                                    driver.variables[variable] = value;
+                                    engine.context.saveData(variable, value);
                                 });
                         } else if (source.indexOf('css(') === 0) {
                             let css = source.split('(')[1].split(')')[0];
                             elm
                                 .getCssValue(css)
                                 .then((value) => {
-                                    driver.variables[variable] = value;
+                                    engine.context.saveData(variable, value);
                                 });
                         } else {
                             return self.cancel(`Unknown source`);
@@ -67,7 +62,7 @@ export default class SetVariable extends Step {
                     }
                 });
         } else if (value) {
-            driver.variables[variable] = value;
+            engine.context.saveData(variable, value);
             return this.proceed();
         }
 

@@ -1,5 +1,5 @@
 export default class Step {
-    constructor(methods) {
+    constructor() {
         this.error = null;
     }
 
